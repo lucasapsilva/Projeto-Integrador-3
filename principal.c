@@ -22,6 +22,6 @@ int main(void){
 // Declaracoes
    int Quantidade_Usuario=0, Quantidade_Produto=0;
 // Instrucoes
-   //abrir_arquivo(&Quantidade_Usuario, &Quantidade_Produto);
+   abrir_arquivo(&Quantidade_Usuario, &Quantidade_Produto);
    menu(&Quantidade_Usuario, &Quantidade_Produto);
 }
