@@ -14,38 +14,32 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
     Cadastro_Produto Produto;
     int Valida;
     int Contador = 0;
-    FILE *fusuario, *fproduto, *fcompra;
+    FILE *fusuario;
+    FILE *fproduto;
+    FILE *fcompra;
 
     // Instrucoes
 
-    //////////////////////////////////////////
-    // GOTO reiniciar o arquivo de usuarios //
-    //inicio_abrir_arquivo_usuario:         //
-    //////////////////////////////////////////
-
     /* Abrir o arquivo somente leitura */
-    fusuario = fopen("usuario.dat", "rb");
+    fusuario = fopen("usuario.txt", "wb+");
 
     /* Verificar se abriu os arquivos */
     if (fusuario == NULL) {
         printf("Erro ao abrir ou arquivo de usuarios nao encontrado para leitura.\n");
-        printf("Deseja criar o arquivo? (1=S/2=N)");
-        do {
-            Valida = lerInteiro();
-            if (Valida == '1')
-                fusuario = fopen("usuario.dat", "ab+");
-        } while ((Valida != '1') && (Valida != '2')); // Enquanto a tecla S ou N não for apertada
-        if (Valida == '2') {
-            system("CLS");
-            printf("   Tentativa numero %d...\n", Contador + 1);
-            Contador++;
-            if (Contador == 3) {
-                printf("\n   Nao e possivel continuar.\n\n");
-                printf("   Pressione qualquer tecla para sair...");
-                lerInteiro();
-                exit(0);
-            }
-            //else goto inicio_abrir_arquivo_usuario; // Recarregar os arquivos
+        printf("Deseja criar o arquivo? (1 = Sim || 2 = Nao)");
+        Valida = lerInteiro();
+        while (Valida != 1 && Valida != 2){// Enquanto a tecla 1 ou 2 não for apertada
+            if (Valida == 1)
+                fusuario = fopen("usuario.txt", "ab+");
+        }
+        if (Valida == 2) {
+            while( Contador <= 3 && fusuario == NULL){
+                fusuario = fopen("usuario.txt", "ab+");
+                printf("   Tentativa numero %d ...\n", Contador + 1);
+                Contador++;
+                if (Contador == 3)
+                    printf("Impossível abrir o arquivo!");
+                }
         }
     } else {
         if (tamanho_arquivo(fusuario) != 0)
@@ -59,32 +53,25 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
 
     Contador = 0;
 
-    //////////////////////////////////////////
-    // GOTO reiniciar o arquivo de produtos //
-    //inicio_abrir_arquivo_produto: //
-    //////////////////////////////////////////
-
     /* Abrir o arquivo somente leitura */
-    fproduto = fopen("produto.dat", "rb");
+    fproduto = fopen("produto.txt", "wb+");
 
     if (fproduto == NULL) {
-        printf("Erro ao abrir ou arquivo de produtos n%co encontrado para leitura. \n\n");
-        printf("Deseja criar o arquivo? (1=S/2=N)");
-        do {
-            Valida = lerInteiro();
-            if (Valida == '1')
-                fproduto = fopen("produto.dat", "ab+");
-        } while ((Valida != '1') && (Valida != '2')); // Enquanto a tecla S ou N não for apertada
-        if (Valida == '2') {
-            system("CLS");
-            printf("   Tentativa numero %d...\n", Contador + 1);
-            Contador++;
-            if (Contador == 3) {
-                printf("Nao e possivel continuar.\n\n");
-                printf("Pressione qualquer tecla para sair...");
-                lerInteiro();
-                exit(0);
-            } //else goto inicio_abrir_arquivo_produto; // Recarregar os arquivos
+        printf("Erro ao abrir ou arquivo de produtos nao encontrado para leitura. \n\n");
+        printf("Deseja criar o arquivo? (1 = Sim || 2 = Nao)");
+        Valida = lerInteiro();
+        while ((Valida != 1) && (Valida != 2)) { // Enquanto a tecla 1 ou 2 não for apertada
+            if (Valida == 1)
+                fproduto = fopen("produto.txt", "ab+");
+        }
+        if (Valida == 2) {
+            while( Contador <= 3 && fproduto == NULL){
+                fproduto = fopen("produto.txt", "ab+");
+                printf("   Tentativa numero %d ...\n", Contador + 1);
+                Contador++;
+                if (Contador == 3)
+                    printf("Impossível abrir o arquivo!");
+                }
         }
     } else {
         if (tamanho_arquivo(fproduto) != 0)
@@ -97,13 +84,13 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
     }
 
     /* Abrir o arquivo somente leitura */
-    fcompra = fopen("compra.tmp", "rb");
+    fcompra = fopen("compra.txt", "wb+");
 
     /* Verificar se abriu os arquivos */
     if (fcompra != NULL) {
         if (fechar_determinado_arquivo(fcompra) == -1)
             return;
-        remove("compra.tmp");
+        remove("compra.txt");
     }
 }
 
@@ -147,7 +134,7 @@ int fechar_determinado_arquivo(FILE *file) {
     int i;
 
     // Instruções
-    if (file != NULL)
+    if (file != NULL){
         if (fclose(file) == EOF) {
             for (i = 0; i <= 7; i++) {
                 printf("  Erro ao fechar o arquivo.");
@@ -155,6 +142,7 @@ int fechar_determinado_arquivo(FILE *file) {
             }
             return -1;
         } else return 1;
+    }
 }
 
 long tamanho_arquivo(FILE *file){
@@ -168,3 +156,4 @@ long tamanho_arquivo(FILE *file){
    fseek(file, atual, SEEK_SET); // Colocar na posição inicial
    return tamanho;
 }
+
