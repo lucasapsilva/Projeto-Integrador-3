@@ -1,4 +1,6 @@
 #include "arquivo.h"
+#include "usuario.h"
+#include "produto.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //                               ABRIR ARQUIVO                                //
@@ -21,7 +23,7 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
     // Instrucoes
 
     /* Abrir o arquivo somente leitura */
-    fusuario = fopen("usuario.txt", "wb+");
+    fusuario = fopen("usuario.txt", "wb");
 
     /* Verificar se abriu os arquivos */
     if (fusuario == NULL) {
@@ -54,7 +56,7 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
     Contador = 0;
 
     /* Abrir o arquivo somente leitura */
-    fproduto = fopen("produto.txt", "wb+");
+    fproduto = fopen("produto.txt", "wb");
 
     if (fproduto == NULL) {
         printf("Erro ao abrir ou arquivo de produtos nao encontrado para leitura. \n\n");
@@ -84,7 +86,7 @@ void abrir_arquivo(int *QtUsu, int *QtPro) {
     }
 
     /* Abrir o arquivo somente leitura */
-    fcompra = fopen("compra.txt", "wb+");
+    fcompra = fopen("compra.txt", "wb");
 
     /* Verificar se abriu os arquivos */
     if (fcompra != NULL) {
@@ -156,4 +158,3 @@ long tamanho_arquivo(FILE *file){
    fseek(file, atual, SEEK_SET); // Colocar na posição inicial
    return tamanho;
 }
-
