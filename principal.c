@@ -1,5 +1,4 @@
-#include "Usuario.h"
-#include "Produto.h"
+#include "arquivo.h"
 
 int lerInteiro() {
     char entrada[20];
@@ -9,6 +8,12 @@ int lerInteiro() {
     return n;
 }
 
+void lerString(char *str, int n){
+    int pos;
+    fgets(str,n,stdin);
+    pos = strlen(str);
+    str[pos-1]='\n';
+}
 ////////////////////////////////////////////////////////////////////////////////
 //                          PROGRAMA PRINCIPAL                                //
 ////////////////////////////////////////////////////////////////////////////////
